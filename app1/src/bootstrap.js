@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { store } from './store';
 
-import { importRemote } from '@module-federation/utilities'
-
 const dynamicFederation = async (scope, module) => {
   const container = window[scope]; // or get the container somewhere else
   // Initialize the container, it may provide shared modules
@@ -17,18 +15,11 @@ const dynamicFederation = async (scope, module) => {
 const RemoteApp = React.lazy(() => dynamicFederation('app2', './RemoteApp'));
 
 const App = () => {
-//   const RemoteApp = React.lazy(() =>
-//   importRemote({
-//     url: 'http://localhost:3002',
-//     scope: 'app2',
-//     module: './RemoteApp',
-//   })
-// )
 
   return (
     <Provider store={store}>
       <div>
-        Welcome to Host App
+        Welcome to Host Apps
         <div>
           <Suspense fallback="Loading...">
             <label>

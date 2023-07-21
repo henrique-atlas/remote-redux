@@ -5,25 +5,15 @@ import reducer, { changeAppNameAction } from './reducer';
 
 const remoteAppScope = 'remoteApp';
 
-const RemoteApp = props => {
-  // const { store } = props;
-  // console.log('here with store', store);
-  // useEffect(() => {
-  //   store.injectReducer(remoteAppScope, reducer);
-  // }, []);
-
-
-  // const [state, setState] = useState(true);
-  // const dispatch = useDispatch();
-  // const state = useSelector(state => state[remoteAppScope]);
-  // const [remoteAppInput, setRemoteAppInput] = useState('');
-
-  // dispatch(changeAppNameAction('banana'))
+const RemoteApp = () => {
+  const dispatch = useDispatch();
+  const state = useSelector(state => state[remoteAppScope]);
+  const [remoteAppInput, setRemoteAppInput] = useState('');
 
   return (
       <div style={{ marginTop: '10px' }}>
         <div>RemoteApp Starting</div>
-        {/* <div>RemoteApp's name from the redux store : {state && state.appName}</div> */}
+        <div>RemoteApp's name from the redux store : {state && state.appName}</div>
 
         <div>
           <input
@@ -41,27 +31,16 @@ const RemoteApp = props => {
   );
 };
 
-// const RemoteAppWrapper = props => {
-//   return (
-//     <RemoteApp {...props} />
-//   );
-// };
-
-let one = false
-const RemoteAppWrapper = props => {
-  // if (one) return
-  // console.log('here with props', props, one);
-  // const { store } = props;
-  // console.log('here with store', store);
-  // useEffect(() => {
-  //   store.injectReducer(remoteAppScope, reducer);
-  // }, []);
-  // one = true
+const RemoteAppWrapper = props => { 
+  const { store } = props;
+  useEffect(() => {
+    store.injectReducer(remoteAppScope, reducer);
+  }, []);
 
   return (
+    <Provider store={store || {}}>
       <RemoteApp />
-    // <Provider store={store || {}}>
-    // </Provider>
+    </Provider>
   );
 };
 

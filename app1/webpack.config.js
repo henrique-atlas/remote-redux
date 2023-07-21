@@ -10,17 +10,6 @@ module.exports = {
   mode: 'development',
   devtool: 'source-map',
 
-  // optimization: {
-  //   splitChunks: {
-  //     cacheGroups: {
-  //       reactVendor: {
-  //         test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
-  //         name: 'vendor-react',
-  //         chunks: 'all',
-  //       },
-  //     },
-  //   },
-  // },
   optimization: {
     minimize: false,
   },
@@ -56,13 +45,9 @@ module.exports = {
         ...deps,
         react: {
           singleton: true,
-          eager: true,
-          requiredVersion: deps.react,
         },
         'react-dom': {
           singleton: true,
-          eager: true,
-          requiredVersion: deps['react-dom'],
         },
       },
     }),
