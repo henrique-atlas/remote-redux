@@ -12,19 +12,27 @@ const RemoteApp = () => {
 
   return (
       <div style={{ marginTop: '10px' }}>
-        <div>RemoteApp Starting</div>
+        <div className='underline text-blue-200' >RemoteApp Starting</div>
         <div>RemoteApp's name from the redux store : {state && state.appName}</div>
 
         <div>
           <input
-            style={{ marginRight: '10px' }}
+            style={{ marginRight: '10px',     
+            "border": 'black',
+            "borderRadius": '1px',
+            "borderStyle": 'solid',
+          }}
             type="text"
             onChange={e => {
               setRemoteAppInput(e.target.value);
             }}
           />
-          <button onClick={() => dispatch(changeAppNameAction(remoteAppInput))}>
-            Dispatch RemoteApp new name
+          <button type='button' className='rounded-full'
+            style={{
+              border: "2px solid green"
+            }}
+            onClick={() => dispatch(changeAppNameAction(remoteAppInput))}>
+            Dispatch Button
           </button>
         </div>
       </div>

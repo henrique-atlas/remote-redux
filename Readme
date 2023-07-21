@@ -1,0 +1,7 @@
+# remote app example
+
+## how to run
+
+install on both folders, app1, app2 - npm run build
+run on both folders, app1, app2 - npm run serve
+check on localhost:3001

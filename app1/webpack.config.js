@@ -1,7 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const deps = require('./package.json').dependencies;
+const path = require('path')
 
 module.exports = {
   entry: './src/index',
@@ -32,11 +32,20 @@ module.exports = {
           presets: [require.resolve('@babel/preset-react')],
         },
       },
+      {
+        test: /\.css$/i,
+        include: path.resolve(__dirname, 'src'),
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
+      },
+      {
+        test: /\.(gif|jpe?g|tiff|png|svg|webp|bmp)$/,
+        exclude: /node_modules/,
+        type: 'asset/resource',
+      },
     ],
   },
 
   plugins: [
-    new CleanWebpackPlugin(),
     new ModuleFederationPlugin({
       name: 'app1',
       // library: { type: 'var', name: 'app1' },
