@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Provider, useSelector, useDispatch } from 'react-redux';
 
-import reducer, { changeAppNameAction } from './reducer';
+import reducer, { changeAppNameAction, changeMainPropertyAction } from './reducer';
 
 const remoteAppScope = 'remoteApp';
 
@@ -12,7 +12,7 @@ const RemoteApp = () => {
 
   return (
       <div style={{ marginTop: '10px' }}>
-        <div className='underline text-blue-200' >RemoteApp Starting</div>
+        <div className='underline text-blue-200' >RemoteApp</div>
         <div>RemoteApp's name from the redux store : {state && state.appName}</div>
 
         <div>
@@ -31,7 +31,10 @@ const RemoteApp = () => {
             style={{
               border: "2px solid green"
             }}
-            onClick={() => dispatch(changeAppNameAction(remoteAppInput))}>
+            onClick={() => {
+              dispatch(changeAppNameAction(remoteAppInput))
+              dispatch(changeMainPropertyAction('new property'))
+            }}>
             Dispatch Button
           </button>
         </div>

@@ -1,7 +1,7 @@
 import * as React from "react"
 import { useState, useRef, useEffect } from "react"
 
-export default function TabsLgBasic({tabContent, tabNames}) {
+export default function TabsLgBasic({tabContent, tabNames, setSystem}) {
   const [tabSelected, setTabSelected] = useState({
     currentTab: 1,
     noTabs: 3,
@@ -102,7 +102,9 @@ export default function TabsLgBasic({tabContent, tabNames}) {
               aria-selected={`${
                 tabSelected.currentTab === 2 ? "true" : "false"
               }`}
-              onClick={() => setTabSelected({ ...tabSelected, currentTab: 2 })}
+              onClick={() => {
+                setTabSelected({ ...tabSelected, currentTab: 2 })
+              }}
             >
               <span>{tabNames[1]}</span>
             </button>

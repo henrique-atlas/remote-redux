@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "start": "concurrently \"cd app1/ && npm start\" \"cd app2/ && npm start\"",
+    "serve": "concurrently \"cd app1/ && npm run serve\" \"cd app2/ && npm run serve\""
+  },
+  "dependencies": {
+    "concurrently": "^8.2.0"
+  }
+}

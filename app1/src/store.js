@@ -2,10 +2,19 @@ import { combineReducers, createStore, compose } from 'redux';
 
 const initialState = {
   appName: 'host',
+  simpleProperty: 'test'
 };
+
+const CHANGE_MAIN_PROPERTY = 'CHANGE_MAIN_PROPERTY'
 
 const hostReducer = (state = initialState, action) => {
   switch (action.type) {
+    case CHANGE_MAIN_PROPERTY: {
+      return {
+        ...state,
+        simpleProperty: action.payload,
+      };
+    }
     default:
       return state;
   }

@@ -5,43 +5,61 @@ import { store } from './store';
 import { Header } from './header'
 import TabsLgBasic from './tabs'
 import './main.css'
+import { loadComponent } from './loadComponent';
 
-const dynamicFederation = async (scope, module) => {
+function System(props) {
+  const {
+    system,
+    system: { remote, url, module },
+    store
+  } = props;
 
-  const container = window[scope]; // or get the container somewhere else
-  // Initialize the container, it may provide shared modules
-  await container.init(__webpack_share_scopes__.default);
-  return container.get(module).then(factory => {
-    const Module = factory();
-    return Module;
-  });
-};
-const RemoteApp = React.lazy(() => dynamicFederation('app2', './RemoteApp'));
+  if (!system || !remote || !url || !module) {
+    return <h2>No system specified</h2>;
+  }
+  const Component = React.lazy(loadComponent(remote, 'app2', module, url));
+  
+  return (
+    <React.Suspense fallback="Loading System">
+      <Component store={store} />
+    </React.Suspense>
+  );
+}
+
 
 const App = () => {
+  const [system, setSystem] = React.useState({});
+  function setApp2() {
+    setSystem({
+      remote: 'app2',
+      url: 'http://localhost:3002',
+      module: './RemoteApp',
+    });
+  }
+  console.log('here with system', system);
   const tabNames = [
-    'maint tab',
-    'Remote app',
+    'maint tab'
   ]
   const tabContent = [
     <p>
       First tab, click on remote tab to load remote app
-    </p>,
-    <div>
-      <Suspense fallback="Loading...">
-        <h1 className="text-3xl font-bold underline text-blue-400">
-          Hello world! 
-        </h1>
-        <label>below starts remote app</label>
-        <RemoteApp store={store} />
-      </Suspense>
-    </div>
+    </p>
   ]
   return (
     <Provider store={store}>
       <div>
         <Header />
-        <TabsLgBasic tabContent={tabContent} tabNames={tabNames} />
+        <TabsLgBasic tabContent={tabContent} tabNames={tabNames} setSystem={setSystem} />
+        <div>
+        <button className='rounded-full'
+            style={{
+              border: "2px solid green"
+            }}
+         onClick={setApp2}>Load App 2 Widget</button>
+        <div style={{ marginTop: '2em' }}>
+          <System system={system} store={store} />
+        </div>
+        </div>
         
       </div>
     </Provider>

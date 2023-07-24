@@ -13,17 +13,23 @@ module.exports = {
   },
 
   output: {
-    publicPath: 'http://localhost:3002/',
+    publicPath: 'auto',
   },
-
   module: {
     rules: [
       {
+        test: /\.m?js$/,
+        type: 'javascript/auto',
+        resolve: {
+          fullySpecified: false,
+        },
+      },
+      {
         test: /\.jsx?$/,
-        loader: require.resolve('babel-loader'),
+        loader: 'babel-loader',
         exclude: /node_modules/,
         options: {
-          presets: [require.resolve('@babel/preset-react')],
+          presets: ['@babel/preset-react'],
         },
       },
     ],
@@ -37,9 +43,8 @@ module.exports = {
         './RemoteApp': './src/RemoteApp',
       },
       shared: {
-        ...deps,
         react: {
-          singleton: true,
+          singleton: true, // only a single version of the shared module is allowed
         },
         'react-dom': {
           singleton: true,

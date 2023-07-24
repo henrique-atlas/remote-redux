@@ -1,35 +1,48 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+
 const deps = require('./package.json').dependencies;
 const path = require('path')
 
 module.exports = {
   entry: './src/index',
-  cache: false,
-
   mode: 'development',
-  devtool: 'source-map',
-
-  optimization: {
-    minimize: false,
+  devServer: {
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    },
+    port: 3001,
   },
+  // cache: false,
+  // devtool: 'source-map',
+  // optimization: {
+  //   minimize: false,
+  // },
 
   output: {
-    publicPath: 'http://localhost:3001/',
+    publicPath: 'auto',
+    // publicPath: 'http://localhost:3001/',
   },
 
-  resolve: {
-    extensions: ['.jsx', '.js', '.json'],
-  },
+  // resolve: {
+  //   extensions: ['.jsx', '.js', '.json'],
+  // },
 
   module: {
     rules: [
       {
+        test: /\.m?js$/,
+        type: 'javascript/auto',
+        resolve: {
+          fullySpecified: false,
+        },
+      },
+      {
         test: /\.jsx?$/,
-        loader: require.resolve('babel-loader'),
+        loader: 'babel-loader',
         exclude: /node_modules/,
         options: {
-          presets: [require.resolve('@babel/preset-react')],
+          presets: ['@babel/preset-react'],
         },
       },
       {
@@ -49,11 +62,11 @@ module.exports = {
     new ModuleFederationPlugin({
       name: 'app1',
       // library: { type: 'var', name: 'app1' },
-      filename: 'remoteEntry.js',
+      // filename: 'remoteEntry.js',
       shared: {
-        ...deps,
+        // ...deps,
         react: {
-          singleton: true,
+          singleton: true, // only a single version of the shared module is allowed
         },
         'react-dom': {
           singleton: true,
