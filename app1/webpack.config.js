@@ -71,6 +71,9 @@ module.exports = {
         'react-dom': {
           singleton: true,
         },
+        'react-router-dom': {
+          singleton: true,
+        }
       },
     }),
     new HtmlWebpackPlugin({

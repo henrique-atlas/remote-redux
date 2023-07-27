@@ -1,7 +1,7 @@
 import * as React from "react"
 import { useState, useRef, useEffect } from "react"
 
-export default function TabsLgBasic({tabContent, tabNames, setSystem}) {
+export default function TabsLgBasic({tabContent, tabNames}) {
   const [tabSelected, setTabSelected] = useState({
     currentTab: 1,
     noTabs: 3,

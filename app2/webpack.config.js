@@ -2,7 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const deps = require('./package.json').dependencies;
 module.exports = {
-  entry: './src/index',
+  entry: './src/singleLoader',
   cache: false,
 
   mode: 'development',
@@ -40,7 +40,7 @@ module.exports = {
       name: 'app2',
       filename: 'remoteEntry.js',
       exposes: {
-        './RemoteApp': './src/RemoteApp',
+        './RemoteApp': './src/bootstrap',
       },
       shared: {
         react: {
@@ -49,6 +49,10 @@ module.exports = {
         'react-dom': {
           singleton: true,
         },
+        'react-router-dom': {
+          singleton: true,
+          // requiredVersion: deps["react-router-dom"],
+        }
       },
     }),
     new HtmlWebpackPlugin({
